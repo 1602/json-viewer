@@ -1,12 +1,13 @@
 import './App.css';
 import { JsonViewer } from './JsonViewer.js';
+import data from './MOCK_DATA.json';
 
 
 function App() {
 
     return (
         <>
-            <JsonViewer>{ '{"foo": "bar"}' }</JsonViewer>
+            <JsonViewer>{ JSON.stringify(data) }</JsonViewer>
         </>
     )
 }
