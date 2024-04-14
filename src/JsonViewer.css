@@ -1,0 +1,86 @@
+.json-tree ol {
+    list-style-type: none;
+    padding-left: 12px;
+    display: none;
+}
+
+
+.json-tree li:not(.parent)::before {
+    background-color: transparent;
+}
+
+.json-tree li::before {
+    content: '\A0\A0';
+    mask-image: url(./assets/triangle.svg);
+    background-color: white;
+    width: 14px;
+    height: 14px;
+    transition: transform 200ms;
+}
+
+.json-tree ol.expanded {
+    display: block;
+}
+
+.json-tree li.expanded::before {
+    transform: rotate(90deg);
+}
+
+.json-tree li {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 16px;
+    cursor: default;
+}
+
+.json-tree :focus {
+    outline: none;
+}
+
+.key-name {
+    color: #7cacf8ff;
+}
+
+.delim {
+    white-space: pre;
+    flex-shink: 0;
+}
+
+.string-value {
+    color: #5cd5fb;
+}
+
+.bool-value, .num-value {
+    color: #9980ff;
+}
+
+.null-value {
+    color: #e3e3e361;
+}
+
+:focus .selected .key-value-pair {
+    background: #3d3d3d;
+}
+
+.json-tree li:hover {
+    background: #3d3d3d;
+}
+
+.fill {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #3d3d3d;
+    display: none;
+    margin-left: -9000px;
+    z-index: -1;
+}
+
+.json-tree li:hover .fill {
+    display: block;
+}
