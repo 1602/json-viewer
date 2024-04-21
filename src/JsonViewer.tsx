@@ -1,7 +1,7 @@
 import React from 'react';
 import './JsonViewer.css';
 import { TreeNode } from './TreeNode.js';
-import { findNextVisibleListItem, findPrevVisibleListItem, clickOn } from './dom.js';
+import { findNextVisibleListItem, findPrevVisibleListItem, clickOn, isInViewport } from './dom.js';
 
 type JsonViewerProps = {
     children: string|string[];
@@ -75,7 +75,7 @@ export function JsonViewer({ children }: JsonViewerProps) {
     return (
         <div ref={ ref } className="json-tree">
             <ol className="expanded" role="tree" tabIndex={ 0 }>
-                <TreeNode selected={ selectedNode } value={ value } key={ "root" } path="" onSelectedNode={ setSelectedNode } />
+                <TreeNode lazy={ true } selected={ selectedNode } value={ value } key={ "root" } path="" onSelectedNode={ setSelectedNode } />
             </ol>
         </div>
     );
@@ -85,6 +85,13 @@ export function JsonViewer({ children }: JsonViewerProps) {
             const path = el.getAttribute('json-path');
             if (path !== null) {
                 setSelectedNode(path);
+                // (el as HTMLElement).focus();
+                // ref.current!.focus();
+                if (el instanceof HTMLElement) {
+                    if (!isInViewport(el)) {
+                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }
             }
         }
     }

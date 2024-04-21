@@ -50,3 +50,45 @@ export function findPrevVisibleListItem(el: Element) {
         return findPrevVisibleListItem(el.previousElementSibling);
     }
 }
+
+export function isInViewport(element: HTMLElement) {
+    const rect = element.getBoundingClientRect();
+    const scrollableParent = getScrollParent(element);
+    if (!scrollableParent) {
+        return true;
+    }
+
+    const result = (
+        rect.top >= 0 &&
+        rect.left >= 0 &&
+        rect.bottom <= scrollableParent.clientHeight
+    );
+
+    console.log('rect.bottom', rect.bottom, scrollableParent.clientHeight, scrollableParent.scrollTop, rect.bottom <= (scrollableParent.clientHeight + scrollableParent.scrollTop), result);
+    // console.log('rect.right', rect.right, scrollableParent.clientWidth, scrollableParent.scrollLeft, rect.right <= (scrollableParent.clientWidth + scrollableParent.scrollLeft), result);
+
+    return result;
+
+}
+
+const isScrollable = (node: Element) => {
+    if (!(node instanceof HTMLElement || node instanceof SVGElement)) {
+        return false
+    }
+    const style = getComputedStyle(node)
+    return ['overflow', 'overflow-x', 'overflow-y'].some((propertyName) => {
+        const value = style.getPropertyValue(propertyName)
+        return value === 'auto' || value === 'scroll'
+    })
+}
+
+function getScrollParent(node: Element): Element {
+    let currentParent = node.parentElement
+    while (currentParent) {
+        if (isScrollable(currentParent)) {
+            return currentParent
+        }
+        currentParent = currentParent.parentElement
+    }
+    return document.scrollingElement || document.documentElement
+}

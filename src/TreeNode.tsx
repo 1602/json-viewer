@@ -12,21 +12,25 @@ export type TreeNodeProps = {
     displayIndexOffset?: number,
     skipPreview?: boolean,
     selected?: string,
+    lazy?: boolean,
 };
 
 
-export class TreeNode extends React.Component<TreeNodeProps, { expanded: boolean }> {
+export class TreeNode extends React.Component<TreeNodeProps, { expanded: boolean, rendered: boolean }> {
 
-    // liRef: React.RefObject<HTMLLIElement>;
+    liRef: React.RefObject<HTMLLIElement>;
 
-    state: { expanded: boolean }
+    state: { expanded: boolean, rendered: boolean }
 
     constructor(props: TreeNodeProps) {
         super(props);
 
-        // this.liRef = React.createRef();
+        const { lazy } = props;
+
+        this.liRef = React.createRef();
         this.state = {
             expanded: false,
+            rendered: lazy ? false : true,
         }
     }
 
@@ -54,8 +58,8 @@ export class TreeNode extends React.Component<TreeNodeProps, { expanded: boolean
     }
 
     render() {
-        const { selected, value, k, path, onSelectedNode, displayIndexOffset = 0, skipPreview = false } = this.props;
-        const {expanded} = this.state;
+        const { lazy, selected, value, k, path, onSelectedNode, displayIndexOffset = 0, skipPreview = false } = this.props;
+        const { expanded, rendered } = this.state;
         const isParent = typeof value === 'object' && value !== null && Object.keys(value).length > 0;
         const isSelected = selected === path;
 
@@ -66,12 +70,12 @@ export class TreeNode extends React.Component<TreeNodeProps, { expanded: boolean
         ].filter(({ on }) => on).map(({value}) => value).join(' ');
 
         const setExpanded = (expanded: boolean) => {
-            this.setState({ expanded });
+            this.setState({ expanded, rendered: true });
         };
 
-        // if (isSelected && this.liRef.current) {
+        if (isSelected && this.liRef.current) {
             // this.liRef.current.focus();
-        // }
+        }
 
         function handleClick() {
             if (isParent) {
@@ -110,13 +114,14 @@ export class TreeNode extends React.Component<TreeNodeProps, { expanded: boolean
         </>);
 
         let children;
-        if (isParent) {
+        if (isParent && rendered) {
             if (Array.isArray(value) && value.length > ARRAY_CHUNK_LIMIT) {
                 children = [];
                 for (let i = 0; i < value.length; i += ARRAY_CHUNK_LIMIT) {
                     const arrayChunkLabel = `[${i} … ${Math.min(value.length - 1, i + ARRAY_CHUNK_LIMIT - 1)}]`;
                     children.push(
                         <TreeNode
+                            lazy={ lazy }
                             key={ path + '/' + arrayChunkLabel }
                             k={ arrayChunkLabel }
                             displayIndexOffset={ i }
@@ -132,17 +137,24 @@ export class TreeNode extends React.Component<TreeNodeProps, { expanded: boolean
                     if (Array.isArray(value)) {
                         k = (parseInt(k, 10) + displayIndexOffset).toString();
                     }
-                    return <TreeNode key={ path + '/' + k } selected={ selected } k={ k } value={ v } path={ path + '/' + k } onSelectedNode={ onSelectedNode } />
+                    return <TreeNode
+                        lazy={ lazy }
+                        key={ path + '/' + k }
+                        selected={ selected }
+                        k={ k }
+                        value={ v }
+                        path={ path + '/' + k }
+                        onSelectedNode={ onSelectedNode } />
                 })
             }
         }
 
         return (<><li
-            // tabIndex={ isSelected ? 0 : undefined }
+            // tabIndex={ isSelected ? 1 : undefined }
             role="treeitem"
             aria-selected={ isSelected ? true : undefined }
             aria-expanded={ expanded ? true : undefined }
-            // ref={ isSelected ? this.liRef : null }
+            ref={ isSelected ? this.liRef : null }
             json-path={ path }
             className={ className }
             onClick={ handleClick }

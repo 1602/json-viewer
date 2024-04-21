@@ -22,3 +22,8 @@
     background-color: #f9f9f9;
   }
 }
+
+#root {
+    overflow: auto;
+    height: 500px;
+}
