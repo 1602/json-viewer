@@ -1,16 +1,17 @@
 import React from 'react';
-import './JsonViewer.css';
+import styles from './JsonViewer.css?inline';
 import { TreeNode } from './TreeNode.js';
 import { findNextVisibleListItem, findPrevVisibleListItem, clickOn, isInViewport } from './dom.js';
 
 type JsonViewerProps = {
+    value?: string;
     children: string|string[];
 }
 
-export function JsonViewer({ children }: JsonViewerProps) {
+export function JsonViewer({ value: val, children }: JsonViewerProps) {
     const [selectedNode, setSelectedNode] = React.useState('');
     const ref = React.useRef<HTMLDivElement>(null);
-    const value = JSON.parse(typeof children === 'string' ? children : children.join(''));
+    const value = JSON.parse(val || (typeof children === 'string' ? children : children.join('')));
 
     React.useEffect(() => {
         const { current } = ref;
@@ -73,11 +74,14 @@ export function JsonViewer({ children }: JsonViewerProps) {
     });
 
     return (
-        <div ref={ ref } className="json-tree">
-            <ol className="expanded" role="tree" tabIndex={ 0 }>
-                <TreeNode lazy={ true } selected={ selectedNode } value={ value } key={ "root" } path="" onSelectedNode={ setSelectedNode } />
-            </ol>
-        </div>
+        <>
+            <style>{styles}</style>
+            <div ref={ ref } className="json-tree">
+                <ol className="expanded" role="tree" tabIndex={ 0 }>
+                    <TreeNode lazy={ true } selected={ selectedNode } value={ value } key={ "root" } path="" onSelectedNode={ setSelectedNode } />
+                </ol>
+            </div>
+        </>
     );
 
     function select(el?: Element|null) {

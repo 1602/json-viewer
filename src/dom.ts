@@ -6,7 +6,11 @@ export function clickOn(el: Element) {
     el.dispatchEvent(theEvent);
 }
 
-export function findNextVisibleListItem(el: Element) {
+export function findNextVisibleListItem(el: Element|null) {
+    if (!el) {
+        return null;
+    }
+
     if (!el.nextElementSibling) {
         return findNextVisibleListItem(el.parentElement!);
     }
@@ -24,7 +28,11 @@ export function findNextVisibleListItem(el: Element) {
     }
 }
 
-export function findPrevVisibleListItem(el: Element) {
+export function findPrevVisibleListItem(el: Element|null) {
+    if (!el) {
+        return null;
+    }
+
     if (!el.previousElementSibling) {
         return findPrevVisibleListItem(el.parentElement!);
     }
@@ -64,7 +72,7 @@ export function isInViewport(element: HTMLElement) {
         rect.bottom <= scrollableParent.clientHeight
     );
 
-    console.log('rect.bottom', rect.bottom, scrollableParent.clientHeight, scrollableParent.scrollTop, rect.bottom <= (scrollableParent.clientHeight + scrollableParent.scrollTop), result);
+    // console.log('rect.bottom', rect.bottom, scrollableParent.clientHeight, scrollableParent.scrollTop, rect.bottom <= (scrollableParent.clientHeight + scrollableParent.scrollTop), result);
     // console.log('rect.right', rect.right, scrollableParent.clientWidth, scrollableParent.scrollLeft, rect.right <= (scrollableParent.clientWidth + scrollableParent.scrollLeft), result);
 
     return result;

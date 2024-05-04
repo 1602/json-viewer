@@ -57,6 +57,14 @@ export class TreeNode extends React.Component<TreeNodeProps, { expanded: boolean
         return false;
     }
 
+    componentDidUpdate() {
+        const { selected, path } = this.props;
+        const isSelected = selected === path;
+        if (isSelected && this.liRef.current) {
+            this.liRef.current.focus();
+        }
+    }
+
     render() {
         const { lazy, selected, value, k, path, onSelectedNode, displayIndexOffset = 0, skipPreview = false } = this.props;
         const { expanded, rendered } = this.state;
@@ -72,10 +80,6 @@ export class TreeNode extends React.Component<TreeNodeProps, { expanded: boolean
         const setExpanded = (expanded: boolean) => {
             this.setState({ expanded, rendered: true });
         };
-
-        if (isSelected && this.liRef.current) {
-            // this.liRef.current.focus();
-        }
 
         function handleClick() {
             if (isParent) {
@@ -150,7 +154,7 @@ export class TreeNode extends React.Component<TreeNodeProps, { expanded: boolean
         }
 
         return (<><li
-            // tabIndex={ isSelected ? 1 : undefined }
+            tabIndex={ isSelected ? 1 : undefined }
             role="treeitem"
             aria-selected={ isSelected ? true : undefined }
             aria-expanded={ expanded ? true : undefined }
@@ -197,7 +201,7 @@ function previewValue(value: JsonValue, depth = 2): string {
                         return `[…]`;
                     }
                     const len = value.length;
-                    return `[${ value.slice(0, 2).map((v) => previewValue(v, depth - 1)).join(', ') }${ len > 3 ? ',…' : ''}]`;
+                    return `[${ value.slice(0, 2).map((v) => previewValue(v, depth - 1)).join(', ') }${ len > 2 ? ',…' : ''}]`;
                 }
 
                 if (value === null) {

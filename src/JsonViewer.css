@@ -1,3 +1,27 @@
+:host {
+  font-family: monospace;
+  font-size: 11px;
+  line-height: 16px;
+  --background-color: #242424;
+  --color: rgba(255, 255, 255, 0.87);
+  --expand-bullet-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none"><path d="M10.5 6.65 4.9 2.8v7.7" fill="black"/></svg>');
+  --expand-bullet-color: white;
+  --expand-bullet-width: 14px;
+  --expand-bullet-height: 14px;
+  --key-color: #7cacf8ff;
+  --number-value-color: #9980ff;
+  --bool-value-color: #9980ff;
+  --null-value-color: #e3e3e361;
+  --string-value-color: #5cd5fb;
+  --focused-node-background: #3d3d3d;
+  --hovered-node-background: #3d3d3d;
+}
+
+.json-tree {
+    /* background-color: var(--jv-background-color, var(--background-color-color)); */
+    color: var(--jv-color, var(--color));
+}
+
 .json-tree ol {
     list-style-type: none;
     padding-left: 12px;
@@ -11,10 +35,10 @@
 
 .json-tree li::before {
     content: '\A0\A0';
-    mask-image: url(./assets/triangle.svg);
-    background-color: white;
-    width: 14px;
-    height: 14px;
+    mask-image: var(--jv-expand-bullet-mask-image, var(--expand-bullet-mask-image));
+    background-color: var(--jv-expand-bullet-color, var(--expand-bullet-color));
+    width: var(--jv-expand-bullet-width, var(--expand-bullet-width));
+    height: var(--jv-expand-bullet-height, var(--expand-bullet-height));
     transition: transform 200ms;
 }
 
@@ -41,41 +65,41 @@
 }
 
 .key-name {
-    color: #7cacf8ff;
+    color: var(--jv-key-color, var(--key-color));
 }
 
 .delim {
     white-space: pre;
-    flex-shink: 0;
+    flex-shrink: 0;
 }
 
 .string-value {
-    color: #5cd5fb;
+    color: var(--jv-string-value-color, var(--string-value-color));
 }
 
-.bool-value, .num-value {
-    color: #9980ff;
+.num-value {
+    color: var(--jv-number-value-color, var(--number-value-color));
+}
+
+.bool-value {
+    color: var(--jv-bool-value-color, var(--bool-value-color));
 }
 
 .null-value {
-    color: #e3e3e361;
+    color: var(--jv-null-value-color, var(--null-value-color));
 }
 
-:focus .selected .key-value-pair {
-    background: #3d3d3d;
+.selected:focus .key-value-pair {
+    background: var(--jv-focused-node-background, var(--focused-node-background));
 }
 
-.json-tree li:hover {
-    background: #3d3d3d;
-}
-
-.fill {
+.json-tree li .fill {
     position: absolute;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    background: #3d3d3d;
+    background: var(--jv-hovered-node-background, var(--hovered-node-background));
     display: none;
     margin-left: -9000px;
     z-index: -1;
