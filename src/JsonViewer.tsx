@@ -89,11 +89,11 @@ export function JsonViewer({ value: val, children }: JsonViewerProps) {
             const path = el.getAttribute('json-path');
             if (path !== null) {
                 setSelectedNode(path);
-                // (el as HTMLElement).focus();
+                (el as HTMLElement).focus();
                 // ref.current!.focus();
                 if (el instanceof HTMLElement) {
                     if (!isInViewport(el)) {
-                        el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        el.scrollIntoView({ block: 'center' });
                     }
                 }
             }
