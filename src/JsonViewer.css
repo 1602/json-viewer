@@ -38,7 +38,7 @@
 .json-tree {
     font-family: monospace;
     font-size: 11px;
-    line-height: 16px;
+    line-height: 1.5;
     background-color: var(--jv-background-color, var(--background-color));
     color: var(--jv-color, var(--color));
     overflow: auto;
