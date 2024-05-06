@@ -6,16 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Example</title>
     <style>
+@media (prefers-color-scheme: dark) {
     body {
         background: #242424;
     }
+}
     </style>
-    <script src="./dist/json-viewer.es.js"></script>
+    <!--script type="module" src="https://unpkg.com/@_1602/json-viewer@0.0.1/dist/json-viewer.es.js"></script-->
+    <script type="module" src="./dist/json-viewer.umd.js"></script>
 </head>
 
 <body>
-    <json-viewer value=' { "demo": { "types": { "boolean": [true, false] , "number": [0, 1, 3.14] , "string": ["hello world", "👻"] , "null": null , "array": [1, 2] , "object": { "foo": "bar" } } } } '>
+    <json-viewer value='{ "demo": { "types": { "boolean": [true, false] , "number": [0, 1, 3.14] , "string": ["hello world", "👻"] , "null": null , "array": [1, 2] , "object": { "foo": "bar" } } } }'>
     </json-viewer>
+
+    <json-viewer></json-viewer>
+
+    <json-viewer value='{foo:"bar"}'></json-viewer>
 </body>
 
 </html>

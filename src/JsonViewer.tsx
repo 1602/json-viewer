@@ -11,7 +11,7 @@ type JsonViewerProps = {
 export function JsonViewer({ value: val, children }: JsonViewerProps) {
     const [selectedNode, setSelectedNode] = React.useState('');
     const ref = React.useRef<HTMLDivElement>(null);
-    const value = JSON.parse(val || (typeof children === 'string' ? children : children.join('')));
+    let value;
 
     React.useEffect(() => {
         const { current } = ref;
@@ -72,6 +72,12 @@ export function JsonViewer({ value: val, children }: JsonViewerProps) {
 
 
     });
+
+    try {
+      value = JSON.parse(val || (typeof children === 'string' ? children : children.join('')));
+    } catch (e: unknown) {
+      return <pre>JsonViewer: {(e as { message: string }).message}</pre>
+    }
 
     return (
         <>
