@@ -1,30 +1,88 @@
-# React + TypeScript + Vite
+# json-viewer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a json-viewer custom element (a.k.a. web-component). Nothing fancy, just a copy of devtools json viewer you see in network panel when previewing json response.
 
-Currently, two official plugins are available:
+Here’s a [demo](https://jsfiddle.net/ewq831s6/3/).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Usage
 
-## Expanding the ESLint configuration
+### HTML
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+Load as module, and use
 
-- Configure the top-level `parserOptions` property like this:
+```html
+<script type="module" src="https://unpkg.com/@_1602/json-viewer"></script>
+<json-viewer value='{"foo": "bar"}'></json-viewer>
+```
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
+Customize appearance
+
+```
+<style>html
+json-viewer {
+  --background-color: #fff;
+  --color: rgb(31, 31, 31);
+  --expand-bullet-color: black;
+  --expand-bullet-width: 14px;
+  --expand-bullet-height: 14px;
+  --key-color: rgb(142, 0, 75);
+  --number-value-color: rgb(8, 66, 160);
+  --bool-value-color: rgb(8, 66, 160);
+  --null-value-color: rgba(31, 31, 31, 0.38);
+  --string-value-color: rgb(220, 54, 46);
+  --focused-node-background: #eee;
+  --hovered-node-background: #eee;
+}
+</style>
+```
+
+To change toggle icon (‣)
+
+```html
+<style>
+json-viewer {
+  --expand-bullet-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none"><path d="M10.5 6.65 4.9 2.8v7.7" fill="black"/></svg>');
+}
+</style>
+```
+
+### React+TS
+
+To use it in react create `declarations.d.ts` with
+
+```
+declare namespace JSX {
+  interface IntrinsicElements {
+    "json-viewer": any;
+  }
 }
 ```
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+And then use as like this
+
+```
+export function JsonViewer({ value } : { value: string }) {
+  return <json-viewer value={ value }></json-viewer>
+}
+```
+
+### Vue+Vite
+
+In vite config, add to `vue()` plugin
+
+```js
+export default defineConfig({
+  // ...
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: tag => ['json-viewer'].includes(tag),
+        },
+      },
+    }),
+  ],
+  // ...
+});
+
+```
