@@ -17,8 +17,8 @@ Load as module, and use
 
 Customize appearance
 
-```
-<style>html
+```html
+<style>
 json-viewer {
   --background-color: #fff;
   --color: rgb(31, 31, 31);
@@ -50,7 +50,7 @@ json-viewer {
 
 To use it in react create `declarations.d.ts` with
 
-```
+```typescript
 declare namespace JSX {
   interface IntrinsicElements {
     "json-viewer": any;
@@ -60,7 +60,7 @@ declare namespace JSX {
 
 And then use as like this
 
-```
+```jsx
 export function JsonViewer({ value } : { value: string }) {
   return <json-viewer value={ value }></json-viewer>
 }
