@@ -15,10 +15,9 @@ Load as module, and use
 <json-viewer value='{"foo": "bar"}'></json-viewer>
 ```
 
-Customize appearance
+Customize appearance in CSS
 
-```html
-<style>
+```css
 json-viewer {
   --background-color: #fff;
   --color: rgb(31, 31, 31);
@@ -33,17 +32,14 @@ json-viewer {
   --focused-node-background: #eee;
   --hovered-node-background: #eee;
 }
-</style>
 ```
 
-To change toggle icon (‣)
+To change toggle icon (‣):
 
-```html
-<style>
+```css
 json-viewer {
   --expand-bullet-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none"><path d="M10.5 6.65 4.9 2.8v7.7" fill="black"/></svg>');
 }
-</style>
 ```
 
 ### React+TS
