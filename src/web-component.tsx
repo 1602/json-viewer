@@ -14,6 +14,9 @@ export class JsonViewerWebComponent extends HTMLElement {
 
     connectedCallback() {
         const jsonString = this.getAttribute('value') || this.textContent || '';
+        if (typeof jsonString !== 'string') {
+          return this.appRoot.render(`json-viewer expects value to be string, got ${typeof jsonString}`);
+        }
         this.appRoot.render(<JsonViewer>{ jsonString }</JsonViewer>);
     }
 
