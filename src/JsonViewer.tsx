@@ -76,7 +76,10 @@ export function JsonViewer({ value: val, children }: JsonViewerProps) {
     try {
       value = JSON.parse(val || (typeof children === 'string' ? children : children.join('')));
     } catch (e: unknown) {
-      return <pre>JsonViewer: {(e as { message: string }).message}</pre>
+      return <>
+          <style>{styles}</style>
+          <pre className="json-tree">JsonViewer: {(e as { message: string }).message}</pre>
+        </>;
     }
 
     return (
