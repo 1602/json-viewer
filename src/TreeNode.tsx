@@ -61,7 +61,7 @@ export class TreeNode extends React.Component<TreeNodeProps, { expanded: boolean
         const { selected, path } = this.props;
         const isSelected = selected === path;
         if (isSelected && this.liRef.current) {
-            this.liRef.current.focus();
+            // this.liRef.current.focus();
         }
     }
 

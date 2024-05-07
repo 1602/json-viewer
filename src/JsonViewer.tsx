@@ -87,19 +87,26 @@ export function JsonViewer({ value: val, children }: JsonViewerProps) {
             <style>{styles}</style>
             <div ref={ ref } className="json-tree">
                 <ol className="expanded" role="tree" tabIndex={ 0 }>
-                    <TreeNode lazy={ true } selected={ selectedNode } value={ value } key={ "root" } path="" onSelectedNode={ setSelectedNode } />
+                    <TreeNode lazy={ true } selected={ selectedNode } value={ value } key={ "root" } path="" onSelectedNode={ onSelectedNode } />
                 </ol>
             </div>
         </>
     );
+
+    function onSelectedNode(path: string) {
+        setSelectedNode(path);
+        const el = ref.current!.querySelector(`[json-path="${ path }"]`);
+        if (el) {
+            setTimeout(() => (el as HTMLElement).focus());
+        }
+    }
 
     function select(el?: Element|null) {
         if (el) {
             const path = el.getAttribute('json-path');
             if (path !== null) {
                 setSelectedNode(path);
-                (el as HTMLElement).focus();
-                // ref.current!.focus();
+                setTimeout(() => (el as HTMLElement).focus());
                 if (el instanceof HTMLElement) {
                     if (!isInViewport(el)) {
                         el.scrollIntoView({ block: 'center' });
