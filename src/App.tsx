@@ -13,7 +13,7 @@ function App() {
             <JsonViewer>{ JSON.stringify(data) }</JsonViewer>
             <JsonViewer>{ JSON.stringify(repos) }</JsonViewer>
             <JsonViewer>{ JSON.stringify(schema) }</JsonViewer>
-            <input value={ name } onInput={ (e) => setName(e.target.value) } />
+            <input value={ name } onInput={ (e) => setName((e.target as HTMLInputElement).value) } />
             <JsonViewer>{ JSON.stringify({ name }) }</JsonViewer>
         </>
     );
