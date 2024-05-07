@@ -1,7 +1,4 @@
 :host {
-  font-family: monospace;
-  font-size: 11px;
-  line-height: 16px;
   --expand-bullet-mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="none"><path d="M10.5 6.65 4.9 2.8v7.7" fill="black"/></svg>');
   --expand-bullet-width: 14px;
   --expand-bullet-height: 14px;
@@ -22,7 +19,6 @@
 }
 
 @media (prefers-color-scheme: dark) {
-
     :host {
       --background-color: #242424;
       --color: rgba(255, 255, 255, 0.87);
@@ -40,8 +36,12 @@
 }
 
 .json-tree {
-    /* background-color: var(--jv-background-color, var(--background-color-color)); */
+    font-family: monospace;
+    font-size: 11px;
+    line-height: 1.5;
+    background-color: var(--jv-background-color, var(--background-color));
     color: var(--jv-color, var(--color));
+    overflow: auto;
 }
 
 .json-tree ol {
@@ -49,7 +49,6 @@
     padding-left: 12px;
     display: none;
 }
-
 
 .json-tree li:not(.parent)::before {
     background-color: transparent;
@@ -62,6 +61,7 @@
     width: var(--jv-expand-bullet-width, var(--expand-bullet-width));
     height: var(--jv-expand-bullet-height, var(--expand-bullet-height));
     transition: transform 200ms;
+    margin-right: 2px;
 }
 
 .json-tree ol.expanded {
