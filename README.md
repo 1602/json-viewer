@@ -2,7 +2,7 @@
 
 This is a json-viewer custom element (a.k.a. web-component). Nothing fancy, just a copy of devtools json viewer you see in network panel when previewing json response.
 
-Here’s a [demo](https://jsfiddle.net/ewq831s6/3/).
+Here’s a [demo](https://jsfiddle.net/1602/yh6pozmd/).
 
 ## Usage
 

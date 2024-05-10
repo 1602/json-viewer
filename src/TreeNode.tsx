@@ -54,6 +54,10 @@ export class TreeNode extends React.Component<TreeNodeProps, { expanded: boolean
             return true;
         }
 
+        if (this.props.value !== nextProps.value) {
+            return true;
+        }
+
         return false;
     }
 
