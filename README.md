@@ -19,18 +19,21 @@ Customize appearance in CSS
 
 ```css
 json-viewer {
-  --background-color: #fff;
-  --color: rgb(31, 31, 31);
-  --expand-bullet-color: black;
-  --expand-bullet-width: 14px;
-  --expand-bullet-height: 14px;
-  --key-color: rgb(142, 0, 75);
-  --number-value-color: rgb(8, 66, 160);
-  --bool-value-color: rgb(8, 66, 160);
-  --null-value-color: rgba(31, 31, 31, 0.38);
-  --string-value-color: rgb(220, 54, 46);
-  --focused-node-background: #eee;
-  --hovered-node-background: #eee;
+  --jv-background-color: #fff;
+  --jv-color: rgb(31, 31, 31);
+  --jv-font-size: 11px;
+  --jv-font-family: monospace;
+  --jv-font-weight: 400;
+  --jv-expand-bullet-color: black;
+  --jv-expand-bullet-width: 14px;
+  --jv-expand-bullet-height: 14px;
+  --jv-key-color: rgb(142, 0, 75);
+  --jv-number-value-color: rgb(8, 66, 160);
+  --jv-bool-value-color: rgb(8, 66, 160);
+  --jv-null-value-color: rgba(31, 31, 31, 0.38);
+  --jv-string-value-color: rgb(220, 54, 46);
+  --jv-focused-node-background: #eee;
+  --jv-hovered-node-background: #eee;
 }
 ```
 
@@ -49,7 +52,7 @@ To use it in react create `declarations.d.ts` with
 ```typescript
 declare namespace JSX {
   interface IntrinsicElements {
-    "json-viewer": any;
+    'json-viewer': any;
   }
 }
 ```
@@ -57,8 +60,8 @@ declare namespace JSX {
 And then use as like this
 
 ```jsx
-export function JsonViewer({ value } : { value: string }) {
-  return <json-viewer value={ value }></json-viewer>
+export function JsonViewer({ value }: { value: string }) {
+  return <json-viewer value={value}></json-viewer>;
 }
 ```
 
@@ -73,12 +76,11 @@ export default defineConfig({
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: tag => ['json-viewer'].includes(tag),
+          isCustomElement: (tag) => ['json-viewer', ...].includes(tag),
         },
       },
     }),
   ],
   // ...
 });
-
 ```

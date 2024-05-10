@@ -3,6 +3,11 @@
   --expand-bullet-width: 14px;
   --expand-bullet-height: 14px;
 
+  /* font props */
+  --font-size: 11px;
+  --font-family: monospace;
+  --font-weight: 400;
+
   /* colour-theme props */
   --background-color: #fff;
   --color: rgb(31, 31, 31);
@@ -36,12 +41,14 @@
 }
 
 .json-tree {
-    font-family: monospace;
-    font-size: 11px;
+    font-family: var(--jv-font-family, var(--font-family));
+    font-size: var(--jv-font-size, var(--font-size));
+    font-weight: var(--jv-font-weight, var(--font-weight));
     line-height: 1.5;
     background-color: var(--jv-background-color, var(--background-color));
     color: var(--jv-color, var(--color));
     overflow: auto;
+    color-scheme: light dark;
 }
 
 .json-tree ol {
