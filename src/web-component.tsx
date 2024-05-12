@@ -17,6 +17,9 @@ export class JsonViewerWebComponent extends HTMLElement {
         if (typeof jsonString !== 'string') {
           return this.appRoot.render(`json-viewer expects value to be string, got ${typeof jsonString}`);
         }
+        if (jsonString === '') {
+            return;
+        }
         this.appRoot.render(<JsonViewer>{ jsonString }</JsonViewer>);
     }
 
@@ -26,6 +29,9 @@ export class JsonViewerWebComponent extends HTMLElement {
 
     set value(val) {
         this.valueProp = val;
+        if (val === '') {
+            return;
+        }
         this.appRoot.render(<JsonViewer>{ val }</JsonViewer>);
     }
 
